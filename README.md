@@ -1,4 +1,4 @@
-<center> <h1>HBNB - The Console</h1> </center>
+<center> <h1>HBNB - MySQL</h1> </center>
 
 This is un updated version of the AirBnB clone project.
 We have intergrated MySQL as the database for this project
