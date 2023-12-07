@@ -34,23 +34,27 @@ def do_deploy(archive_path):
     file_name = archive_path.split('/')
     file_name = file_name[-1].split(".")
     new_file = file_name[0]
+    folder = "/data/web_static/releases"
+    
+    try:
+        if os.path.exists(archive_path):
+            return True
 
-    if os.path.exists(archive_path):
+
         put("{}".format(archive_path), "/tmp/")
-        run("mkdir -p /data/web_static/releases/{}".format(new_file))
-        run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/".format
-            (new_file, new_file))
+        run("mkdir -p {}/{}".format(folder, new_file))
+        run("tar -xzf /tmp/{}.tgz -C {}/{}/".format
+            (folder, new_file, new_file))
         run("rm /tmp/{}.tgz".format(new_file))
-        folder = "/data/web_static/releases"
         run("mv {}/{}/web_static/* {}/{}/"
             .format(folder, new_file, folder, new_file))
         run("rm -rf {}/web_static/{}".format(folder, new_file))
         run("rm -rf /data/web_static/current")
-        run("ln -fs {}/{} /data/web_static/current"
+        run("ln -sf {}/{} /data/web_static/current"
             .format(folder, new_file))
 
         return True
-    else:
+    except:
 
         return False
 
