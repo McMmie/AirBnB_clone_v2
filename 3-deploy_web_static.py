@@ -5,10 +5,11 @@ of the web_static folder of your AirBnB Clone repo"""
 
 from fabric.api import *
 from datetime import datetime
-import tarfile
+from fabric.operations import run, put, local
 import os
 
 env.hosts = ['54.237.38.25', '100.25.152.122']
+archive = None
 
 
 def do_pack():
@@ -35,12 +36,11 @@ def do_deploy(archive_path):
     file_name = file_name[-1].split(".")
     new_file = file_name[0]
     folder = "/data/web_static/releases"
-    
-    try:
-        if os.path.exists(archive_path):
-            return True
 
+    if os.path.isfile(archived_path) is False:
+        return False
 
+    if os.path.exists(archive_path):
         put("{}".format(archive_path), "/tmp/")
         run("mkdir -p {}/{}".format(folder, new_file))
         run("tar -xzf /tmp/{}.tgz -C {}/{}/".format
@@ -54,7 +54,7 @@ def do_deploy(archive_path):
             .format(folder, new_file))
 
         return True
-    except:
+    else:
 
         return False
 
@@ -63,7 +63,9 @@ def deploy():
     """
     creates and distributes an archive to your web servers
     """
-    archive = do_pack()
+    global archive
+    if archive is None:
+        archive = do_pack()
     if archive is None:
         return False
 
