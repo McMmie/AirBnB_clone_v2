@@ -54,6 +54,7 @@ def do_deploy(archive_path):
 
         return False
 
+
 def deploy():
     """
     creates and distributes an archive to your web servers
