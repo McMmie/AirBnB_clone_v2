@@ -1,4 +1,4 @@
-<h1>Web Framework with Flask README</h1>
+<h1>Web Framework with Flask</h1>
 
 ## What is a Web Framework?
 
