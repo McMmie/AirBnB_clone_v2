@@ -5,6 +5,8 @@ from flask import Flask
 from flask import abort
 from flask import render_template
 from markupsafe import escape
+from models import storage
+#from models import storage.all()
 
 
 app = Flask(__name__)
@@ -83,7 +85,7 @@ def odd_or_even(n):
         abort(404)
 
 @app.teardown_appcontext
-def teardown():
+def teardown(self):
     """a method to handle @app.teardown_appcontext"""
     storage.close()
 
